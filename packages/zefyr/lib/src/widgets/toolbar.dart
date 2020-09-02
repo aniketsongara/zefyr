@@ -29,11 +29,16 @@ enum ZefyrToolbarAction {
   quote,
   horizontalRule,
   image,
+  video,
+  cameraVideo,
+  galleryVideo,
   cameraImage,
   galleryImage,
+  audio,
   hideKeyboard,
   close,
   confirm,
+
 }
 
 final kZefyrToolbarAttributeActions = <ZefyrToolbarAction, NotusAttributeKey>{
@@ -260,6 +265,9 @@ class ZefyrToolbarState extends State<ZefyrToolbar>
       buildButton(context, ZefyrToolbarAction.code),
       buildButton(context, ZefyrToolbarAction.horizontalRule),
       if (editor.imageDelegate != null) ImageButton(),
+      if (editor.videoDelegate != null) VideoButton(),
+      AudioButton(),
+
     ];
     return buttons;
   }
@@ -348,8 +356,12 @@ class _DefaultZefyrToolbarDelegate implements ZefyrToolbarDelegate {
     ZefyrToolbarAction.quote: Icons.format_quote,
     ZefyrToolbarAction.horizontalRule: Icons.remove,
     ZefyrToolbarAction.image: Icons.photo,
+    ZefyrToolbarAction.video: Icons.videocam,
+    ZefyrToolbarAction.galleryVideo: Icons.video_library,
+    ZefyrToolbarAction.cameraVideo: Icons.video_call,
     ZefyrToolbarAction.cameraImage: Icons.photo_camera,
     ZefyrToolbarAction.galleryImage: Icons.photo_library,
+    ZefyrToolbarAction.audio: Icons.music_note,
     ZefyrToolbarAction.hideKeyboard: Icons.keyboard_hide,
     ZefyrToolbarAction.close: Icons.close,
     ZefyrToolbarAction.confirm: Icons.check,

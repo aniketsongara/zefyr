@@ -54,7 +54,6 @@ class ZefyrSelectionOverlayState extends State<ZefyrSelectionOverlay>
   OverlayState _overlay;
   OverlayEntry _toolbar;
   AnimationController _toolbarController;
-
   ZefyrScope _scope;
 
   ZefyrScope get scope => _scope;

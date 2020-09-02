@@ -9,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:quill_delta/quill_delta.dart';
 import 'package:zefyr/zefyr.dart';
 
+import 'audio.dart';
 import 'images.dart';
+import 'video.dart';
 
 class ZefyrLogo extends StatelessWidget {
   @override
@@ -88,6 +90,8 @@ class _FullPageEditorScreenState extends State<FullPageEditorScreen> {
           focusNode: _focusNode,
           mode: _editing ? ZefyrMode.edit : ZefyrMode.select,
           imageDelegate: CustomImageDelegate(),
+          videoDelegate: CustomVideoDelegate(),
+          audioDelegate: CustomAudioDelegate(),
           keyboardAppearance: _darkTheme ? Brightness.dark : Brightness.light,
         ),
       ),
@@ -111,7 +115,7 @@ class _FullPageEditorScreenState extends State<FullPageEditorScreen> {
     return [
       CheckedPopupMenuItem(
         value: _Options.darkTheme,
-        child: Text('Dark theme'),
+        child: Text("Dark theme"),
         checked: _darkTheme,
       ),
     ];

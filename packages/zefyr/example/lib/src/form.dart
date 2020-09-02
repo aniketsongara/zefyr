@@ -7,6 +7,7 @@ import 'package:zefyr/zefyr.dart';
 
 import 'full_page.dart';
 import 'images.dart';
+import 'video.dart';
 
 enum _Options { darkTheme }
 
@@ -23,16 +24,7 @@ class _FormEmbeddedScreenState extends State<FormEmbeddedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final form = ListView(
-      children: <Widget>[
-        TextField(decoration: InputDecoration(labelText: 'Name')),
-        buildEditor(),
-        TextField(
-          decoration: InputDecoration(labelText: 'Details'),
-          maxLines: 3,
-        ),
-      ],
-    );
+    final form = buildEditor();
 
     final result = Scaffold(
       resizeToAvoidBottomPadding: true,
@@ -61,12 +53,12 @@ class _FormEmbeddedScreenState extends State<FormEmbeddedScreen> {
 
   Widget buildEditor() {
     return ZefyrField(
-      height: 200.0,
       decoration: InputDecoration(labelText: 'Description'),
       controller: _controller,
       focusNode: _focusNode,
       autofocus: true,
       imageDelegate: CustomImageDelegate(),
+      videoDelegate: CustomVideoDelegate(),
       physics: ClampingScrollPhysics(),
     );
   }
@@ -84,7 +76,7 @@ class _FormEmbeddedScreenState extends State<FormEmbeddedScreen> {
     return [
       CheckedPopupMenuItem(
         value: _Options.darkTheme,
-        child: Text('Dark theme'),
+        child: Text("Dark theme"),
         checked: _darkTheme,
       ),
     ];

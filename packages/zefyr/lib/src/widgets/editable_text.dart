@@ -3,7 +3,6 @@
 // BSD-style license that can be found in the LICENSE file.
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:notus/notus.dart';
 
@@ -13,6 +12,7 @@ import 'controller.dart';
 import 'cursor_timer.dart';
 import 'editor.dart';
 import 'image.dart';
+import 'audio.dart';
 import 'input.dart';
 import 'list.dart';
 import 'mode.dart';
@@ -22,6 +22,7 @@ import 'render_context.dart';
 import 'scope.dart';
 import 'selection.dart';
 import 'theme.dart';
+import 'video.dart';
 
 /// Core widget responsible for editing Zefyr documents.
 ///
@@ -36,6 +37,8 @@ class ZefyrEditableText extends StatefulWidget {
     @required this.controller,
     @required this.focusNode,
     @required this.imageDelegate,
+    this.videoDelegate,
+    this.audioDelegate,
     this.selectionControls,
     this.autofocus = true,
     this.mode = ZefyrMode.edit,
@@ -54,6 +57,9 @@ class ZefyrEditableText extends StatefulWidget {
   /// Controls whether this editor has keyboard focus.
   final FocusNode focusNode;
   final ZefyrImageDelegate imageDelegate;
+
+  final ZefyrVideoDelegate videoDelegate;
+  final ZefyrAudioDelegate audioDelegate;
 
   /// Whether this text field should focus itself if nothing else is already
   /// focused.
@@ -164,10 +170,7 @@ class _ZefyrEditableTextState extends State<ZefyrEditableText>
       controls: widget.selectionControls ?? defaultSelectionControls(context),
     ));
 
-    return MouseRegion(
-      cursor: SystemMouseCursors.text,
-      child: Stack(fit: StackFit.expand, children: layers),
-    );
+    return Stack(fit: StackFit.expand, children: layers);
   }
 
   @override

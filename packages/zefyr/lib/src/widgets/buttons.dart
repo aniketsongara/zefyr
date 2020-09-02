@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:notus/notus.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:audio_recorder/audio_recorder.dart';
 import 'scope.dart';
 import 'theme.dart';
 import 'toolbar.dart';
-
+import 'package:file/local.dart';
 /// A button used in [ZefyrToolbar].
 ///
 /// Create an instance of this widget with [ZefyrButton.icon] or
@@ -294,6 +294,97 @@ class _ImageButtonState extends State<ImageButton> {
     }
   }
 }
+
+
+class AudioButton extends StatefulWidget {
+
+  const AudioButton({Key key}) :super(key: key);
+
+  @override
+  _AudioButtonState createState() => _AudioButtonState();
+}
+
+class _AudioButtonState extends State<AudioButton> {
+  @override
+  Widget build(BuildContext context) {
+    final toolbar = ZefyrToolbar.of(context);
+    return toolbar.buildButton(
+      context,
+      ZefyrToolbarAction.audio,
+      onPressed: _recordAudio,
+    );
+  }
+
+
+
+  void _recordAudio() async {
+    final editor = ZefyrToolbar.of(context).editor;
+    final audio = await editor.audioDelegate
+        .pickAudio(context);
+    if (audio != null) {
+      editor.formatSelection(NotusAttribute.embed.audio(audio));
+    }
+  }
+}
+
+class VideoButton extends StatefulWidget {
+  const VideoButton({Key key}) : super(key: key);
+
+  @override
+  _VideoButtonState createState() => _VideoButtonState();
+}
+
+class _VideoButtonState extends State<VideoButton> {
+  @override
+  Widget build(BuildContext context) {
+    final toolbar = ZefyrToolbar.of(context);
+    return toolbar.buildButton(
+      context,
+      ZefyrToolbarAction.video,
+      onPressed: showOverlay,
+    );
+  }
+
+
+  void showOverlay() {
+    final toolbar = ZefyrToolbar.of(context);
+    toolbar.showOverlay(buildOverlay);
+  }
+
+  Widget buildOverlay(BuildContext context) {
+    final toolbar = ZefyrToolbar.of(context);
+    final buttons = Row(
+      children: <Widget>[
+        SizedBox(width: 8.0),
+        toolbar.buildButton(context, ZefyrToolbarAction.cameraVideo,
+            onPressed: _pickVideoFromCamera),
+        toolbar.buildButton(context, ZefyrToolbarAction.galleryVideo,
+            onPressed: _pickVideoFromGallery),
+      ],
+    );
+    return ZefyrToolbarScaffold(body: buttons);
+  }
+
+
+  void _pickVideoFromGallery() async {
+    final editor = ZefyrToolbar.of(context).editor;
+    final video = await editor.videoDelegate
+        .pickVideo(editor.videoDelegate.gallerySource);
+    if (video != null) {
+      editor.formatSelection(NotusAttribute.embed.video(video));
+    }
+  }
+
+  void _pickVideoFromCamera() async {
+    final editor = ZefyrToolbar.of(context).editor;
+    final video =
+    await editor.videoDelegate.pickVideo(editor.videoDelegate.cameraSource);
+    if (video != null) {
+      editor.formatSelection(NotusAttribute.embed.video(video));
+    }
+  }
+}
+
 
 class LinkButton extends StatefulWidget {
   const LinkButton({Key key}) : super(key: key);

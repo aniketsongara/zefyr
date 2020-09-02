@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'audio.dart';
 import 'controller.dart';
 import 'editor.dart';
 import 'image.dart';
 import 'mode.dart';
 import 'toolbar.dart';
+import 'video.dart';
 
 /// Zefyr editor with material design decorations.
 class ZefyrField extends StatefulWidget {
@@ -19,6 +21,8 @@ class ZefyrField extends StatefulWidget {
   final ZefyrMode mode;
   final ZefyrToolbarDelegate toolbarDelegate;
   final ZefyrImageDelegate imageDelegate;
+  final ZefyrVideoDelegate videoDelegate;
+  final ZefyrAudioDelegate audioDelegate;
   final ScrollPhysics physics;
 
   /// The appearance of the keyboard.
@@ -38,6 +42,8 @@ class ZefyrField extends StatefulWidget {
     this.mode,
     this.toolbarDelegate,
     this.imageDelegate,
+    this.videoDelegate,
+    this.audioDelegate,
     this.physics,
     this.keyboardAppearance,
   }) : super(key: key);
@@ -58,6 +64,8 @@ class _ZefyrFieldState extends State<ZefyrField> {
       mode: _effectiveMode,
       toolbarDelegate: widget.toolbarDelegate,
       imageDelegate: widget.imageDelegate,
+      videoDelegate: widget.videoDelegate,
+      audioDelegate: widget.audioDelegate,
       physics: widget.physics,
       keyboardAppearance: widget.keyboardAppearance,
     );

@@ -18,6 +18,8 @@ export 'src/widgets/editor.dart';
 export 'src/widgets/field.dart';
 export 'src/widgets/horizontal_rule.dart';
 export 'src/widgets/image.dart';
+export 'src/widgets/video.dart';
+export 'src/widgets/audio.dart';
 export 'src/widgets/list.dart';
 export 'src/widgets/mode.dart';
 export 'src/widgets/paragraph.dart';

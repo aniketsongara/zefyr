@@ -6,8 +6,9 @@ import 'package:flutter/services.dart';
 
 import 'src/form.dart';
 import 'src/full_page.dart';
-import 'src/text_field_page.dart';
+import 'src/videotest.dart';
 import 'src/view.dart';
+import 'src/text_field_page.dart';
 
 void main() {
   runApp(ZefyrApp());
@@ -35,12 +36,17 @@ class ZefyrApp extends StatelessWidget {
       title: 'Zefyr Editor',
       home: HomePage(),
       routes: {
-        '/fullPage': buildFullPage,
-        '/form': buildFormPage,
-        '/view': buildViewPage,
-        '/textinput': buildTextFieldPage,
+        "/fullPage": buildFullPage,
+        "/form": buildFormPage,
+        "/view": buildViewPage,
+        "/textinput": buildTextFieldPage,
+        "/videotest" : buildVideoTest
       },
     );
+  }
+
+  Widget buildVideoTest(BuildContext context){
+   return VideoTest();
   }
 
   Widget buildFullPage(BuildContext context) {
@@ -84,6 +90,10 @@ class HomePage extends StatelessWidget {
           RaisedButton(
             onPressed: () => nav.pushNamed('/textinput'),
             child: Text('basic text input'),
+          ),
+          RaisedButton(
+            onPressed: () => nav.pushNamed('/videotest'),
+            child: Text('VideoTest'),
           ),
           Expanded(child: Container()),
         ],

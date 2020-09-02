@@ -10,9 +10,11 @@ import 'package:notus/notus.dart';
 import 'editable_box.dart';
 import 'horizontal_rule.dart';
 import 'image.dart';
+import 'audio.dart';
 import 'rich_text.dart';
 import 'scope.dart';
 import 'theme.dart';
+import 'video.dart';
 
 /// Represents single line of rich text document in Zefyr editor.
 class ZefyrLine extends StatefulWidget {
@@ -151,7 +153,8 @@ class _ZefyrLineState extends State<ZefyrLine> {
     return result;
   }
 
-  Widget buildEmbed(BuildContext context, ZefyrScope scope) {
+  Widget buildEmbed(BuildContext context, ZefyrScope scope)
+  {
     EmbedNode node = widget.node.children.single;
     EmbedAttribute embed = node.style.get(NotusAttribute.embed);
 
@@ -159,6 +162,10 @@ class _ZefyrLineState extends State<ZefyrLine> {
       return ZefyrHorizontalRule(node: node);
     } else if (embed.type == EmbedType.image) {
       return ZefyrImage(node: node, delegate: scope.imageDelegate);
+    }else if (embed.type == EmbedType.video) {
+      return ZefyrVideo(node: node, delegate: scope.videoDelegate);
+    }else if (embed.type == EmbedType.audio) {
+      return ZefyrAudio(node: node, delegate: scope.audioDelegate);
     } else {
       throw UnimplementedError('Unimplemented embed type ${embed.type}');
     }
