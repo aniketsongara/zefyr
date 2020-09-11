@@ -16,7 +16,7 @@ import 'theme.dart';
 /// Provides interface for embedding images into Zefyr editor.
 // TODO: allow configuring image sources and related toolbar buttons.
 @experimental
-abstract class ZefyrVideoDelegate<S> {
+abstract class ZefyrVideoDelegate<S>  {
   /// Unique key to identify camera source.
   S get cameraSource;
 

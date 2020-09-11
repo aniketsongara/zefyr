@@ -2,17 +2,10 @@ import 'package:flutter/material.dart';
 import 'dart:io' as io;
 import 'dart:async';
 import 'package:audio_recorder/audio_recorder.dart';
-import 'package:file/file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:file/local.dart';
 
 class AudioRecordingScreen extends StatefulWidget {
-  final LocalFileSystem localFileSystem;
-
-  AudioRecordingScreen({localFileSystem})
-      : this.localFileSystem = localFileSystem ?? LocalFileSystem();
-
   @override
   State<StatefulWidget> createState() {
     return AudioRecordingState();
@@ -59,15 +52,15 @@ class AudioRecordingState extends State<AudioRecordingScreen> {
     try {
       if (hasPermission) {
 
-        createDirectory();
-        String fileName =
+        await createDirectory();
+        var fileName =
             'AUD_${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}_${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}:${DateTime.now().millisecond}';
         await AudioRecorder.start(
-            path: dir.path + '/TBB/' + fileName,
+            path: dir.path + '/TBB/' + fileName.toString(),
             audioOutputFormat: AudioOutputFormat.AAC);
 
         print(
-            '*********************************custom recording path is : ${dir.path + '/TBB/' + fileName}*********************************');
+            '*********************************custom recording path is : ${dir.path + '/TBB/' + fileName.toString()}*********************************');
 
         bool isRecording = await AudioRecorder.isRecording;
         setState(() {
@@ -76,7 +69,7 @@ class AudioRecordingState extends State<AudioRecordingScreen> {
         });
       } else {
         Scaffold.of(context).showSnackBar(
-            new SnackBar(content: new Text("You must accept permissions")));
+             SnackBar(content:  Text('You must accept permissions')));
       }
     } catch (e) {
       print(e);
@@ -85,20 +78,10 @@ class AudioRecordingState extends State<AudioRecordingScreen> {
 
   Future<void> _stopAudioRecording() async {
     var recording = await AudioRecorder.stop();
-    print("Stop recording: ${recording.path}");
-    bool isRecording = await AudioRecorder.isRecording;
-    File file = widget.localFileSystem.file(recording.path);
-
-    print("  File length: ${await file.length()}");
-    setState(() {
-      //_recording = recording;
-      _isRecording = isRecording;
-    });
+    print('Stop recording: ${recording.path}');
 
     Navigator.pop(context,'${recording.path}');
 
-    print(
-        '*********************************Recording path is : ${recording.path}*********************************');
   }
 
   @override
@@ -128,7 +111,7 @@ class AudioRecordingState extends State<AudioRecordingScreen> {
             ),
           ),
           onTap: _isRecording ? _stopAudioRecording : _startAudioRecording,),
-          Text('Tap to Start recording.')
+          Text(_isRecording ? 'Tap to Start recording.' : 'Recording...')
         ],
       ),
     );

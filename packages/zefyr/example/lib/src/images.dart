@@ -4,6 +4,7 @@
 
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:zefyr/zefyr.dart';
@@ -24,6 +25,7 @@ class CustomImageDelegate implements ZefyrImageDelegate<ImageSource> {
     return file.uri.toString();
   }
 
+
   @override
   Widget buildImage(BuildContext context, String key) {
     // We use custom "asset" scheme to distinguish asset images from other files.
@@ -34,7 +36,11 @@ class CustomImageDelegate implements ZefyrImageDelegate<ImageSource> {
       // Otherwise assume this is a file stored locally on user's device.
       final file = File.fromUri(Uri.parse(key));
       final image = FileImage(file);
-      return Image(image: image);
+      return FlatButton(
+          onPressed: () {
+            print('Image button is working.');
+          },
+          child: Image(image: image));
     }
   }
 }
